@@ -52,8 +52,8 @@ public class Sprites {
             spreed = 0;
             controlMove();
         }
-        Sprite_now.setHeight((int)heightImage);
-        Sprite_now.setWidth((int)widthImage);
+        //Sprite_now.setHeight((int)heightImage);
+        //Sprite_now.setWidth((int)widthImage);
         canvas.drawBitmap(Sprite_now, x, y, paint);
     }
 
