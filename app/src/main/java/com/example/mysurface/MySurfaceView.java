@@ -35,6 +35,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     //счёт игры
     int score = 0;
 
+    Sprites sprites;
+
     public MySurfaceView(Context context) {
         super(context);
 
@@ -89,7 +91,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             wall_X  = weightScreen / 2 ;
             Random random = new Random();
             wall_Y = random.nextInt((int)heightScreen-wall.getHeight()-5);
-
+            sprites = new Sprites(res);
             gameMap = new GameMap((int)weightScreen, (int)heightScreen, res);
             iX = weightScreen / 2;
             iY = 4 * heightScreen / 5;
@@ -114,7 +116,7 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         //перремещяем картинку
         canvas.drawBitmap(image, 0, iY, paint);
-
+        sprites.draw(0,(int)iY,heightImage,weightImage,canvas);
         //стена
         canvas.drawBitmap(wall, wall_X, wall_Y, paint);
         wall_Rect = new Rect((int) wall_X,(int)wall_Y,(int)wall_X+wall.getWidth(),(int)wall_Y+wall.getHeight());

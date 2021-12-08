@@ -60,7 +60,6 @@ public class GameMap {
     //изменение карты
     private void  changMap(){
 
-
         for (int i = 0 ; i < mapArray.length; i++){
             for (int j = 0; j < mapArray[i].length-1 ; j++){
                 mapArray[i][j] = mapArray[i][j+1];
