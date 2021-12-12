@@ -19,6 +19,8 @@ import java.util.Random;
 public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback{
     Bitmap image,wall;//переменная для картинки
     Paint paint;
+
+    Bitmap enemy,player;
     float iX, iY, tX=0,tY=0,wall_Y = 0,wall_X = 0;
     float dx = 0, dy = 0;
     Resources res;//достп к ресурсам
@@ -36,14 +38,21 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
     int score = 0;
 
     Sprites sprites;
+    Sprites spritesbad;
 
     public MySurfaceView(Context context) {
+
         super(context);
+
 
         //комада которая актевирует наши методы интерфейся
         getHolder().addCallback(this);
 
         res = getResources();
+
+        player = BitmapFactory.decodeResource(res,R.drawable.player);
+        enemy = BitmapFactory.decodeResource(res,R.drawable.enemy);
+
         image = BitmapFactory.decodeResource(res, R.drawable.pers);
         wall = BitmapFactory.decodeResource(res, R.drawable.wall);
         heightImage = image.getHeight();
@@ -91,7 +100,10 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
             wall_X  = weightScreen / 2 ;
             Random random = new Random();
             wall_Y = random.nextInt((int)heightScreen-wall.getHeight()-5);
-            sprites = new Sprites(res);
+            sprites = new Sprites(player);
+
+            spritesbad = new Sprites(enemy);
+
             gameMap = new GameMap((int)weightScreen, (int)heightScreen, res);
             iX = weightScreen / 2;
             iY = 4 * heightScreen / 5;
@@ -119,6 +131,8 @@ public class MySurfaceView extends SurfaceView implements SurfaceHolder.Callback
         sprites.draw(0,(int)iY,heightImage,weightImage,canvas);
         //стена
         canvas.drawBitmap(wall, wall_X, wall_Y, paint);
+        spritesbad.draw((int)wall_X,(int)wall_Y,heightImage,weightImage,canvas);
+
         wall_Rect = new Rect((int) wall_X,(int)wall_Y,(int)wall_X+wall.getWidth(),(int)wall_Y+wall.getHeight());
         canvas.drawText(String.format("score = %d",score),
                 weightScreen/2,

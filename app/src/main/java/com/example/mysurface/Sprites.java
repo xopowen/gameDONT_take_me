@@ -8,48 +8,47 @@ import android.graphics.Paint;
 
 public class Sprites {
     Bitmap SpritesImage;
-    int spritesList[][],spreed;
-    float sprite_X,sprite_Y;
+    int spritesList[][],speed;
+    int sprite_X,sprite_Y;
     Bitmap Sprite_now;
     int move_X = 0,move_Y = 0;
 
-    public Sprites(Resources resources){
-    SpritesImage = BitmapFactory.decodeResource(resources,R.drawable.player);
-    sprite_X = SpritesImage.getWidth() / 5;
-    sprite_Y = SpritesImage.getHeight() / 3;
-
-    spritesList = new int[SpritesImage.getWidth()/(int)sprite_X][SpritesImage.getHeight()/(int)sprite_Y];
-    Sprite_now = Bitmap.createBitmap(SpritesImage, move_X*(int)sprite_X, (int)sprite_Y * move_Y,(move_X+1)*(int)sprite_X, (int)sprite_Y * (1+move_Y));
+    public Sprites(Bitmap SpritesImage_out){
+    SpritesImage = SpritesImage_out;
+    sprite_X = SpritesImage.getWidth() / 5;//110
+    sprite_Y = SpritesImage.getHeight() / 3;//100
+                            //300/100                                  550/110
+    spritesList = new int[SpritesImage.getHeight()/sprite_X][SpritesImage.getWidth()/sprite_Y];
+    Sprite_now = Bitmap.createBitmap(SpritesImage, 0, 0,(int)sprite_X, (int)sprite_Y);
 
     }
 
     public void controlMove(){
 
-        move_X++;
-        if (move_X == spritesList.length-1){
+        move_X+=1;
+        if (move_X == 4){
             move_X = 0;
-
-            move_Y++;
-            if (move_Y == spritesList[0].length-1){
+            move_Y+=1;
+            if (move_Y == 2){
                 move_Y = 0;
             }
         }
-        if ((move_X+1) * (int)sprite_X-1 <= SpritesImage.getWidth()&&(int)sprite_Y * (1+move_Y)<=SpritesImage.getHeight())
+
         Sprite_now = Bitmap.createBitmap(SpritesImage,
-                move_X * (int)sprite_X-1,
-                (int)sprite_Y * move_Y,
-             (move_X+1)*(int)sprite_X-1,
-             (int)sprite_Y * (1+move_Y));
+                move_X * sprite_X,
+                move_Y * sprite_Y,
+                sprite_X ,
+                sprite_Y );
 
     }
     public void Speed(){
-        spreed+=1;
+        speed += 1;
     }
     public void draw(int x,int y,float heightImage,float widthImage,Canvas canvas){
         Paint paint = new Paint();
         Speed();
-        if (spreed >= 50){
-            spreed = 0;
+        if (speed >= 3){
+            speed = 0;
             controlMove();
         }
         //Sprite_now.setHeight((int)heightImage);
